@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Upload enterprise documents and ask grounded questions with validated sources."
+    />
+    <title>Enterprise Knowledge Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a class="brand" href="/" aria-label="Enterprise Knowledge Assistant home">
+          <span class="brand__mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span>
+            <strong>Enterprise Knowledge</strong>
+            <small>Grounded document intelligence</small>
+          </span>
+        </a>
+
+        <div class="topbar__actions">
+          <span class="status-pill"><i></i><span id="service-status">Checking services</span></span>
+          <button class="icon-button" type="button" aria-label="Settings" title="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.09A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.09A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.09A1.7 1.7 0 0 0 15.5 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.13.38.35.72.64 1 .3.28.68.43 1.09.43H21v4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+          </button>
+          <div class="profile-card">
+            <span class="avatar">EA</span>
+            <span><small>WORKSPACE</small><strong>Enterprise AI</strong></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span>Workspace</span><b>›</b><strong>Knowledge assistant</strong>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Private knowledge workspace</span>
+          <h1>Turn documents into<br /><em>grounded answers.</em></h1>
+          <p>Index trusted source material, ask natural-language questions, and inspect every supporting passage.</p>
+        </div>
+        <div class="hero__metric">
+          <span id="document-count">0</span>
+          <small>indexed documents</small>
+        </div>
+      </section>
+
+      <div class="mode-switch" role="tablist" aria-label="Workspace modes">
+        <button class="mode-switch__button is-active" data-view="upload" role="tab">Knowledge workspace</button>
+        <button class="mode-switch__button" data-view="chat" role="tab">Ask the assistant</button>
+      </div>
+
+      <section id="upload-view" class="view-panel is-active">
+        <div class="section-heading">
+          <div><span class="eyebrow">01 · Add knowledge</span><h2>Upload source documents</h2></div>
+          <p>PDF and text files are validated, chunked, embedded, and indexed with provenance.</p>
+        </div>
+
+        <form id="upload-form" class="upload-card">
+          <div class="upload-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 15v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4"/></svg>
+          </div>
+          <h3>Drop your document here</h3>
+          <p>Upload a text-based PDF or TXT file. The public deployment accepts files up to 4 MB.</p>
+
+          <div class="upload-options">
+            <label>Workspace<select disabled><option>Default workspace</option></select></label>
+            <label>Content type<select disabled><option>Enterprise document</option></select></label>
+            <label>Answer language<select disabled><option>English</option></select></label>
+          </div>
+
+          <input id="file-input" name="file" type="file" accept=".pdf,.txt,application/pdf,text/plain" hidden />
+          <button id="choose-file" class="button button--dark" type="button">Choose file</button>
+          <div id="selected-file" class="selected-file" aria-live="polite">No file selected</div>
+          <button id="upload-button" class="button button--accent" type="submit" disabled>Upload and index</button>
+          <div id="upload-progress" class="progress" hidden><span></span></div>
+          <p id="upload-message" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <div class="capability-grid">
+          <article><span class="card-icon">⌁</span><h3>Grounded chat</h3><p>Answers use only authorized indexed passages.</p><b>Ask now →</b></article>
+          <article><span class="card-icon">▤</span><h3>Source library</h3><p>Track readiness, filenames, and ingestion status.</p><b>Review →</b></article>
+          <article><span class="card-icon">◇</span><h3>Validated citations</h3><p>Every displayed source maps to retrieved evidence.</p><b>Inspect →</b></article>
+          <article><span class="card-icon">≋</span><h3>Secure retrieval</h3><p>Tenant and workspace filters run inside Qdrant.</p><b>Learn more →</b></article>
+        </div>
+
+        <section class="library-section">
+          <div class="section-heading section-heading--compact">
+            <div><span class="eyebrow">Source library</span><h2>Indexed documents</h2></div>
+            <button id="refresh-documents" class="button button--quiet" type="button">Refresh</button>
+          </div>
+          <div id="document-list" class="document-list"><p class="empty-state">No indexed documents yet.</p></div>
+        </section>
+      </section>
+
+      <section id="chat-view" class="view-panel">
+        <div class="chat-layout">
+          <div class="chat-intro">
+            <span class="eyebrow">02 · Ask your knowledge</span>
+            <h2>Ask with confidence.</h2>
+            <p>The assistant retrieves authorized evidence, generates a structured response with Groq, and validates every citation before display.</p>
+            <ul><li>Evidence-only answers</li><li>Clear abstention when context is missing</li><li>Exact source passages</li></ul>
+          </div>
+
+          <div class="chat-card">
+            <div id="conversation" class="conversation">
+              <div class="welcome-message"><span>EA</span><div><strong>Knowledge assistant</strong><p>Upload a document, then ask me a question about its contents.</p></div></div>
+            </div>
+            <form id="chat-form" class="composer">
+              <label for="question-input">Ask a question</label>
+              <textarea id="question-input" rows="3" placeholder="What does our policy say about…?"></textarea>
+              <div><small>Answers include validated source references.</small><button class="button button--accent" type="submit">Ask assistant</button></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Enterprise Knowledge Assistant</span><span>Grounded by design · Sources always visible</span></footer>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

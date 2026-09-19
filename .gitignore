@@ -1,0 +1,43 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+pytest-cache-files-*/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.tmp/
+
+# Runtime and user data
+data/
+uploads/
+qdrant_storage/
+.qdrant/
+*.db
+*.sqlite
+*.sqlite3
+
+# Model and package caches
+.cache/
+models/
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build and packaging
+build/
+dist/
+*.egg-info/

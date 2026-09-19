@@ -1,0 +1,6 @@
+[server]
+port = 8502
+
+[browser]
+serverAddress = "localhost"
+serverPort = 8502

@@ -1,0 +1,27 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    HF_HOME=/opt/huggingface \
+    METADATA_DATABASE_URL=sqlite:////tmp/enterprise-rag.db \
+    UPLOAD_ROOT=/tmp/uploads
+
+WORKDIR /app
+
+COPY pyproject.toml README.md ./
+COPY app ./app
+COPY domain ./domain
+COPY ingestion ./ingestion
+COPY rag ./rag
+COPY storage ./storage
+COPY ui ./ui
+COPY web ./web
+COPY server.py ./server.py
+
+RUN pip install . && \
+    python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-base-en-v1.5')"
+
+EXPOSE 80
+
+CMD ["sh", "-c", "uvicorn server:app --host 0.0.0.0 --port ${PORT:-80}"]

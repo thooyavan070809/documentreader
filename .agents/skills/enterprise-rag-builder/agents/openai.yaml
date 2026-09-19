@@ -1,0 +1,4 @@
+interface:
+  display_name: "Enterprise Rag Builder"
+  short_description: "Build and verify the enterprise RAG assistant"
+  default_prompt: "Use $enterprise-rag-builder to implement the next approved architecture phase with tests."
