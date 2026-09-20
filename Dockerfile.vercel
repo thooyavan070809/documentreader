@@ -19,7 +19,11 @@ COPY ui ./ui
 COPY web ./web
 COPY server.py ./server.py
 
-RUN pip install . && \
+# Install PyTorch from its CPU-only index first. The default Linux wheel can
+# pull several gigabytes of CUDA libraries that are unused by this CPU service
+# and can exhaust Vercel's container-build disk before the image is committed.
+RUN pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.4,<3" && \
+    pip install . && \
     python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-base-en-v1.5')"
 
 EXPOSE 80
